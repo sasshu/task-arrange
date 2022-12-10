@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {
-  AngularFireAuthGuard,
+  AuthGuard,
   redirectUnauthorizedTo,
   redirectLoggedInTo,
-} from '@angular/fire/compat/auth-guard';
+} from '@angular/fire/auth-guard';
 
 const redirectUnauthorized = () => redirectUnauthorizedTo(['auth/signin']);
 const redirectLoggedIn = () => redirectLoggedInTo(['/']);
-const redirectStartPage = () => redirectLoggedInTo('folder/inbox');
+const redirectStartPage = () => redirectLoggedInTo('folder/Inbox');
 
 const routes: Routes = [
   {
@@ -17,20 +17,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('./folder/folder.module').then((m) => m.FolderPageModule),
     pathMatch: 'full',
-    canActivate: [AngularFireAuthGuard],
+    canActivate: [AuthGuard],
     data: { authGuardPipe: redirectStartPage },
   },
   {
     path: 'folder/:id',
     loadChildren: () =>
       import('./folder/folder.module').then((m) => m.FolderPageModule),
-    canActivate: [AngularFireAuthGuard],
+    canActivate: [AuthGuard],
     data: { authGuardPipe: redirectUnauthorized },
   },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    canActivate: [AngularFireAuthGuard],
+    canActivate: [AuthGuard],
     data: { authGuardPipe: redirectLoggedIn },
   },
 ];

@@ -4,6 +4,11 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ folder }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="signOut()" shape="round">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -22,14 +27,9 @@
         target="_blank"
         rel="noopener noreferrer"
         href="https://ionicframework.com/docs/components"
-        >UI Components</a
       >
+        UI Components
+      </a>
     </p>
   </div>
-
-  <ion-list>
-    <ion-item (click)="signOut()" button="true">
-      <ion-label>ログアウト</ion-label>
-    </ion-item>
-  </ion-list>
 </ion-content>

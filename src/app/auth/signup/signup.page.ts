@@ -7,6 +7,10 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
+  // ロード中か判断
+  loading: boolean = false;
+
+  // 認証情報
   login: {
     email: string;
     password: string;
@@ -20,6 +24,7 @@ export class SignupPage implements OnInit {
   ngOnInit() {}
 
   signUp() {
-    this.auth.authSignUp(this.login);
+    this.loading = true;
+    this.auth.authSignUp(this.login).finally(() => (this.loading = false));
   }
 }
