@@ -1,0 +1,7 @@
+{
+  "name": "task-arrange",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
