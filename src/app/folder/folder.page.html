@@ -16,6 +16,20 @@
 
   <div id="container">
     <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <p>
+      Explore
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://ionicframework.com/docs/components"
+        >UI Components</a
+      >
+    </p>
   </div>
+
+  <ion-list>
+    <ion-item (click)="signOut()" button="true">
+      <ion-label>ログアウト</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -3,6 +3,7 @@ export const environment = {
   firebase: {
     apiKey: 'AIzaSyDWmqFtq7V6wEmGusibykSfEVBfBuPqK5k',
     authDomain: 'task-arrange.firebaseapp.com',
+    databaseURL: 'https://task-arrange-default-rtdb.firebaseio.com/',
     projectId: 'task-arrange',
     storageBucket: 'task-arrange.appspot.com',
     messagingSenderId: '320676883532',
