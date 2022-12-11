@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { AuthService } from './auth/auth.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -20,23 +21,44 @@ export class AppComponent {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
-  constructor(public afAuth: Auth, public auth: AuthService) {
+  constructor(
+    public afAuth: Auth,
+    public auth: AuthService,
+    public alertController: AlertController
+  ) {
     this.redraw();
-    this.isFirst = true;
   }
 
+  // メールアドレスの再読み込み
   redraw() {
-    // 初回のみ実行
-    if (this.isFirst) {
-      let unsbscribe = this.afAuth.onAuthStateChanged((user) => {
-        if (user) {
-          this.email = user.email;
-        } else {
-          this.email = null;
-        }
-        unsbscribe();
-      });
-      this.isFirst = false;
-    }
+    let unsbscribe = this.afAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.email = user.email;
+      } else {
+        this.email = null;
+      }
+      unsbscribe();
+    });
+  }
+
+  // ログアウト
+  async signOut() {
+    const alert = await this.alertController.create({
+      header: 'ログアウトしますか？',
+      buttons: [
+        {
+          text: 'キャンセル',
+        },
+        {
+          text: 'ログアウト',
+          cssClass: 'logout-button-confirm',
+          handler: async () => {
+            await this.auth.authSignOut();
+            this.redraw();
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }
