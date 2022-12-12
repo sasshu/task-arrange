@@ -19,11 +19,13 @@ export class FolderPage implements OnInit {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
   }
 
-  getCopy(num: number) {
-    let elem = document.getElementsByClassName('copy-msg')[num] as HTMLElement;
-    elem!.style.visibility = 'visible';
-    setTimeout(() => {
-      elem!.style.visibility = 'hidden';
-    }, 2000);
+  getCopy(n: number) {
+    navigator.clipboard.writeText(this.getData.taskList[n].text).then(() => {
+      let elem = document.getElementsByClassName('copy-msg')[n] as HTMLElement;
+      elem!.style.visibility = 'visible';
+      setTimeout(() => {
+        elem!.style.visibility = 'hidden';
+      }, 2000);
+    });
   }
 }
