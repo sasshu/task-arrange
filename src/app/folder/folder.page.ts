@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GetDataService } from '../data/get-data.service';
 
 @Component({
   selector: 'app-folder',
@@ -9,9 +10,20 @@ import { ActivatedRoute } from '@angular/router';
 export class FolderPage implements OnInit {
   public folder!: string;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    public getData: GetDataService
+  ) {}
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
+  }
+
+  getCopy(num: number) {
+    let elem = document.getElementsByClassName('copy-msg')[num] as HTMLElement;
+    elem!.style.visibility = 'visible';
+    setTimeout(() => {
+      elem!.style.visibility = 'hidden';
+    }, 2000);
   }
 }

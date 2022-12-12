@@ -28,3 +28,15 @@
 button.alert-button.logout-button-confirm {
   color: var(--ion-color-danger);
 }
+
+.flex {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+}
+
+.hide {
+  display: none;
+}

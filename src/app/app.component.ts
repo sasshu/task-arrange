@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { AuthService } from './auth/auth.service';
 import { AlertController } from '@ionic/angular';
+import { GetDataService } from './data/get-data.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,6 @@ import { AlertController } from '@ionic/angular';
 })
 export class AppComponent {
   email: string | null = null;
-  isFirst: boolean = true;
   public appPages = [
     { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
     { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
@@ -24,7 +24,8 @@ export class AppComponent {
   constructor(
     public afAuth: Auth,
     public auth: AuthService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public getData: GetDataService
   ) {
     this.redraw();
   }
@@ -54,7 +55,7 @@ export class AppComponent {
           cssClass: 'logout-button-confirm',
           handler: async () => {
             await this.auth.authSignOut();
-            this.redraw();
+            await this.redraw();
           },
         },
       ],
