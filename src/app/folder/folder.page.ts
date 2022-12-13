@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetDataService } from '../data/get-data.service';
+import { ITask } from '../interfaces/task';
+import { PopoverController } from '@ionic/angular';
+import { EditorComponent } from '../editor/editor.component';
 
 @Component({
   selector: 'app-folder',
@@ -10,9 +13,12 @@ import { GetDataService } from '../data/get-data.service';
 export class FolderPage implements OnInit {
   public folder!: string;
 
+  task: ITask | null = null;
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    public getData: GetDataService
+    public getData: GetDataService,
+    public popOverController: PopoverController
   ) {}
 
   ngOnInit() {
@@ -27,5 +33,22 @@ export class FolderPage implements OnInit {
         elem!.style.visibility = 'hidden';
       }, 2000);
     });
+  }
+
+  async showEditor(data: ITask) {
+    const popover = await this.popOverController.create({
+      component: EditorComponent,
+      componentProps: { DATA: data },
+      cssClass: 'custom-popover',
+      alignment: 'center',
+      size: 'auto',
+      animated: true,
+    });
+    return await popover.present();
+  }
+
+  addTask() {
+    this.getData.taskList.push(this.task!);
+    this.task = null;
   }
 }

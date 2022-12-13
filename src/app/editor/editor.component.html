@@ -1,0 +1,12 @@
+<form id="editor">
+  <ion-list>
+    <ion-item>
+      <ion-label class="label" position="floating">Label</ion-label>
+      <ion-input type="text" [(ngModel)]="task.label" name="label"></ion-input>
+    </ion-item>
+    <ion-item>
+      <!-- <ion-label position="floating">Text</ion-label> -->
+      <ion-textarea class="textarea" [(ngModel)]="task.text" name="text" auto-grow="true"></ion-textarea>
+    </ion-item>
+  </ion-list>
+</form>

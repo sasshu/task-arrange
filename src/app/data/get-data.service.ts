@@ -1,46 +1,52 @@
 import { Injectable } from '@angular/core';
-import { ITaskList } from '../interfaces/task-list';
+import { ITask } from '../interfaces/task';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GetDataService {
-  taskList: ITaskList[] = [
+  taskList: ITask[] = [
     {
       text: '願書提出',
-      deadline: '2022年12月31日',
       label: '事務作業',
-      priority: 1,
+      deadline: '2022-12-31T23:59:59',
+      updated: '2022-12-10T20:05:32',
+      pageview: 3,
     },
     {
       text: '英語の勉強',
-      deadline: '2022年12月15日',
       label: '勉強',
-      priority: 4,
+      deadline: '2022-12-15T00:00:00',
+      updated: '2022-12-01T15:39:10',
+      pageview: 3,
     },
     {
       text: 'プレゼント買う',
-      deadline: '2022年12月24日',
       label: 'お出かけ',
-      priority: 5,
+      deadline: '2022-12-24T00:00:00',
+      updated: '2022-11-29T18:39:40',
+      pageview: 23,
     },
     {
       text: '6時に起きる',
-      deadline: '2022年12月24日',
       label: '勉強',
-      priority: 6,
+      deadline: '2022-12-24T06:00:00',
+      updated: '2022-12-01T15:40:15',
+      pageview: 1,
     },
     {
       text: '部屋決める',
-      deadline: '2023年2月5日',
       label: '部屋探し',
-      priority: 3,
+      deadline: '2023-02-05T00:00:00',
+      updated: '2022-12-01T15:39:10',
+      pageview: 7,
     },
     {
       text: '埼玉に行く',
-      deadline: '2022年1月14日',
       label: '部屋探し',
-      priority: 2,
+      deadline: '2023-01-14T00:00:00',
+      updated: '2022-12-05T17:41:42',
+      pageview: 10,
     },
   ];
   constructor() {}

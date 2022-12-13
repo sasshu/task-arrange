@@ -40,3 +40,17 @@ button.alert-button.logout-button-confirm {
 .hide {
   display: none;
 }
+
+// .custom-popover {
+//   display: flex;
+//   align-items: center;
+// }
+
+ion-popover {
+  --width: 80%;
+  --max-height: 80%;
+  --offset-y: -20%;
+  // --height: 80%;
+  --backdrop-opacity: 0.7;
+  --border-radius: 20px;
+}

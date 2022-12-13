@@ -11,14 +11,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { getApp, provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AuthGuard } from '@angular/fire/auth-guard';
+
 import { environment } from '../environments/environment';
+import { EditorComponent } from './editor/editor.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EditorComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     // AngularFirestoreModule,
