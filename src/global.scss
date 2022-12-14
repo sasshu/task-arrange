@@ -41,16 +41,31 @@ button.alert-button.logout-button-confirm {
   display: none;
 }
 
-// .custom-popover {
-//   display: flex;
-//   align-items: center;
-// }
-
 ion-popover {
-  --width: 80%;
+  --width: 90%;
   --max-height: 80%;
-  --offset-y: -20%;
-  // --height: 80%;
   --backdrop-opacity: 0.7;
-  --border-radius: 20px;
+}
+
+ion-popover::part(content) {
+  border-radius: 10px;
+  left: 5%;
+  top: 10%;
+}
+
+@media screen and (min-width: 520px) {
+  ion-popover {
+    --width: 80%;
+    --max-height: 80%;
+    --backdrop-opacity: 0.7;
+  }
+
+  ion-popover::part(content) {
+    border-radius: 10px;
+    left: 10%;
+    top: 10%;
+  }
+}
+
+@media screen and (min-width: 960px) {
 }

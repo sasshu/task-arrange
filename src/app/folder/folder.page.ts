@@ -13,7 +13,13 @@ import { EditorComponent } from '../editor/editor.component';
 export class FolderPage implements OnInit {
   public folder!: string;
 
-  task: ITask | null = null;
+  task: ITask = {
+    text: '',
+    label: '',
+    deadline: '',
+    updated: '',
+    pageview: 1,
+  };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -23,6 +29,17 @@ export class FolderPage implements OnInit {
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
+  }
+
+  initTask(task: ITask) {
+    task = {
+      text: '',
+      label: '',
+      deadline: '',
+      updated: '',
+      pageview: 1,
+    };
+    return task;
   }
 
   getCopy(n: number) {
@@ -39,16 +56,21 @@ export class FolderPage implements OnInit {
     const popover = await this.popOverController.create({
       component: EditorComponent,
       componentProps: { DATA: data },
-      cssClass: 'custom-popover',
-      alignment: 'center',
-      size: 'auto',
-      animated: true,
+    });
+
+    popover.onDidDismiss().then(() => {
+      if (data.text == '') {
+        let list = this.getData.taskList;
+        this.getData.taskList.splice(list.indexOf(data), 1);
+      }
     });
     return await popover.present();
   }
 
   addTask() {
-    this.getData.taskList.push(this.task!);
-    this.task = null;
+    this.showEditor(this.task).then(() => {
+      this.getData.taskList.push(this.task);
+      this.task = this.initTask(this.task);
+    });
   }
 }
