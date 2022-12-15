@@ -6,53 +6,61 @@ ion-content {
   padding-bottom: 30px;
 }
 
-// #container strong {
-//   font-size: 20px;
-//   line-height: 26px;
-// }
-
-// #container p {
-//   font-size: 16px;
-//   line-height: 22px;
-//   color: #8c8c8c;
-//   margin: 0;
-// }
-
-// #container a {
-//   text-decoration: none;
-// }
+ion-button {
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+  }
+}
 
 ion-icon {
   font-size: 24px;
 }
 
+.medium {
+  color: var(--ion-color-medium);
+}
+
+.primary {
+  color: var(--ion-color-primary);
+}
+
 ion-card {
   border-radius: 10px;
+  box-sizing: content-box;
+  &:hover {
+    outline: 2px solid var(--ion-color-light);
+  }
+
   ion-card-subtitle {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
   }
+
   ion-card-content {
-    font-size: 20px;
+    color: var(--ion-color-dark);
+    font-size: 18px;
   }
+
   .copy {
     display: flex;
     position: absolute;
     top: 5px;
     right: 5px;
+
     .copy-msg {
       position: relative;
       top: 7px;
       visibility: hidden;
     }
+
     .copy-button {
-      --color: --ion-color-dark;
       visibility: hidden;
     }
-  }
 
-  .copy:hover .copy-button {
-    visibility: visible;
+    &:hover .copy-button {
+      visibility: visible;
+    }
   }
 }
 
@@ -67,6 +75,9 @@ ion-fab {
 }
 
 @media screen and (min-width: 520px) {
+  ion-icon {
+    font-size: 20px;
+  }
   #container {
     margin: 3px;
 

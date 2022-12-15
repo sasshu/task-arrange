@@ -12,6 +12,7 @@ export class GetDataService {
       deadline: '2022-12-31T23:59:59',
       updated: '2022-12-10T20:05:32',
       pageview: 3,
+      ispinned: false,
     },
     {
       text: '英語の勉強',
@@ -19,6 +20,7 @@ export class GetDataService {
       deadline: '2022-12-15T00:00:00',
       updated: '2022-12-01T15:39:10',
       pageview: 3,
+      ispinned: false,
     },
     {
       text: 'プレゼント買う',
@@ -26,6 +28,7 @@ export class GetDataService {
       deadline: '2022-12-24T00:00:00',
       updated: '2022-11-29T18:39:40',
       pageview: 23,
+      ispinned: false,
     },
     {
       text: '6時に起きる',
@@ -33,6 +36,7 @@ export class GetDataService {
       deadline: '2022-12-24T06:00:00',
       updated: '2022-12-01T15:40:15',
       pageview: 1,
+      ispinned: false,
     },
     {
       text: '部屋決める',
@@ -40,6 +44,7 @@ export class GetDataService {
       deadline: '2023-02-05T00:00:00',
       updated: '2022-12-01T15:39:10',
       pageview: 7,
+      ispinned: false,
     },
     {
       text: '埼玉に行く',
@@ -47,6 +52,7 @@ export class GetDataService {
       deadline: '2023-01-14T00:00:00',
       updated: '2022-12-05T17:41:42',
       pageview: 10,
+      ispinned: false,
     },
   ];
   constructor() {}

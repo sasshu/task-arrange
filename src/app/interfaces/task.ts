@@ -4,4 +4,5 @@ export interface ITask {
   deadline: string;
   updated: string;
   pageview: number;
+  ispinned: boolean;
 }

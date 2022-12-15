@@ -12,25 +12,21 @@ import { EditorComponent } from '../editor/editor.component';
 })
 export class FolderPage implements OnInit {
   public folder!: string;
-
-  task: ITask = {
-    text: '',
-    label: '',
-    deadline: '',
-    updated: '',
-    pageview: 1,
-  };
+  task!: ITask;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public getData: GetDataService,
     public popOverController: PopoverController
-  ) {}
+  ) {
+    this.task = this.initTask(this.task);
+  }
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
   }
 
+  // タスクの初期化
   initTask(task: ITask) {
     task = {
       text: '',
@@ -38,13 +34,17 @@ export class FolderPage implements OnInit {
       deadline: '',
       updated: '',
       pageview: 1,
+      ispinned: false,
     };
     return task;
   }
 
+  // タスク内テキストをクリップボードにコピー
   getCopy(n: number) {
     navigator.clipboard.writeText(this.getData.taskList[n].text).then(() => {
-      let elem = document.getElementsByClassName('copy-msg')[n] as HTMLElement;
+      const elem = document.getElementsByClassName('copy-msg')[
+        n
+      ] as HTMLElement;
       elem!.style.visibility = 'visible';
       setTimeout(() => {
         elem!.style.visibility = 'hidden';
@@ -52,6 +52,7 @@ export class FolderPage implements OnInit {
     });
   }
 
+  // タスク編集画面の表示
   async showEditor(data: ITask) {
     const popover = await this.popOverController.create({
       component: EditorComponent,
@@ -60,17 +61,50 @@ export class FolderPage implements OnInit {
 
     popover.onDidDismiss().then(() => {
       if (data.text == '') {
-        let list = this.getData.taskList;
-        this.getData.taskList.splice(list.indexOf(data), 1);
+        const list = this.getData.taskList;
+        list.splice(list.indexOf(data), 1);
       }
     });
     return await popover.present();
   }
 
+  // タスク完了
+  finishTask() {}
+
+  // タスク追加
   addTask() {
     this.showEditor(this.task).then(() => {
       this.getData.taskList.push(this.task);
       this.task = this.initTask(this.task);
     });
+  }
+
+  // タスク削除
+  deleteTask(n: number) {
+    const list = this.getData.taskList;
+    list.splice(list.indexOf(list[n]), 1);
+  }
+
+  // タスクのピン止め
+  pinTask(n: number) {
+    const list = this.getData.taskList;
+    const tTask = list[n];
+
+    tTask.ispinned = !tTask.ispinned;
+
+    if (list.length > 1) {
+      list.splice(list.indexOf(list[n]), 1);
+
+      for (let i = 0; i < list.length; i++) {
+        if (!list[i].ispinned) {
+          list.splice(i, 0, tTask);
+          break;
+          // 全てにピンが打ってある場合
+        } else if (i == list.length - 1) {
+          list.push(tTask);
+          break;
+        }
+      }
+    }
   }
 }
