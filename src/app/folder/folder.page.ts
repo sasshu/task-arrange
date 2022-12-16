@@ -14,6 +14,9 @@ export class FolderPage implements OnInit {
   public folder!: string;
   task!: ITask;
 
+  sleep = (sec: number) =>
+    new Promise((resolve) => setTimeout(resolve, sec * 1000));
+
   constructor(
     private activatedRoute: ActivatedRoute,
     public getData: GetDataService,
@@ -32,7 +35,7 @@ export class FolderPage implements OnInit {
       text: '',
       label: '',
       deadline: '',
-      updated: '',
+      updated: new Date(),
       pageview: 1,
       ispinned: false,
     };
@@ -82,7 +85,9 @@ export class FolderPage implements OnInit {
   // タスク削除
   deleteTask(n: number) {
     const list = this.getData.taskList;
-    list.splice(list.indexOf(list[n]), 1);
+    this.sleep(0.3).then(() => {
+      list.splice(list.indexOf(list[n]), 1);
+    });
   }
 
   // タスクのピン止め
@@ -92,19 +97,21 @@ export class FolderPage implements OnInit {
 
     tTask.ispinned = !tTask.ispinned;
 
-    if (list.length > 1) {
-      list.splice(list.indexOf(list[n]), 1);
+    this.sleep(0.3).then(() => {
+      if (list.length > 1) {
+        list.splice(list.indexOf(list[n]), 1);
 
-      for (let i = 0; i < list.length; i++) {
-        if (!list[i].ispinned) {
-          list.splice(i, 0, tTask);
-          break;
-          // 全てにピンが打ってある場合
-        } else if (i == list.length - 1) {
-          list.push(tTask);
-          break;
+        for (let i = 0; i < list.length; i++) {
+          if (!list[i].ispinned) {
+            list.splice(i, 0, tTask);
+            break;
+            // 全てにピンが打ってある場合
+          } else if (i == list.length - 1) {
+            list.push(tTask);
+            break;
+          }
         }
       }
-    }
+    });
   }
 }
