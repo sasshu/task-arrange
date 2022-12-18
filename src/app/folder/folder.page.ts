@@ -13,6 +13,8 @@ import { EditorComponent } from '../editor/editor.component';
 export class FolderPage implements OnInit {
   public folder!: string;
   task!: ITask;
+  tagList!: string[];
+  tagFlag!: boolean[];
 
   sleep = (sec: number) =>
     new Promise((resolve) => setTimeout(resolve, sec * 1000));
@@ -60,6 +62,7 @@ export class FolderPage implements OnInit {
     const popover = await this.popOverController.create({
       component: EditorComponent,
       componentProps: { DATA: task },
+      cssClass: 'editor-popover',
     });
 
     popover.onDidDismiss().then(() => {
@@ -127,8 +130,41 @@ export class FolderPage implements OnInit {
   // タスク完了
   finishTask() {}
 
-  // タグの編集
-  editTags(task: ITask) {}
+  // タグリストの作成
+  arrangeTags(task: ITask) {
+    this.tagList = [];
+    this.tagFlag = [];
+    const list = this.getData.taskList;
+    for (let i = 0; i < list.length; i++) {
+      for (let j = 0; j < list[i].tags.length; j++) {
+        if (!this.tagList.includes(list[i].tags[j])) {
+          this.tagList.push(list[i].tags[j]);
+
+          if (task.tags.includes(list[i].tags[j])) {
+            this.tagFlag.push(true);
+          } else {
+            this.tagFlag.push(false);
+          }
+        }
+      }
+    }
+    console.log(this.tagList);
+  }
+
+  editTags(task: ITask, tag: string) {
+    if (task.tags.includes(tag)) {
+      this.deleteTags(task, tag);
+    } else {
+      task.tags.push(tag);
+    }
+  }
+
+  checkTag(task: ITask, tag: string) {
+    if (task.tags.includes(tag)) {
+      return true;
+    }
+    return false;
+  }
 
   // タグの削除
   deleteTags(task: ITask, tag: string) {

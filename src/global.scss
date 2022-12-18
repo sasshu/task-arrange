@@ -42,34 +42,41 @@ button.alert-button.logout-button-confirm {
 }
 
 ion-popover {
-  --width: 90%;
-  --max-height: 80%;
   --backdrop-opacity: 0.7;
 }
 
-ion-popover::part(content) {
+ion-popover.editor-popover {
+  --width: 90%;
+  --max-height: 80%;
+}
+
+ion-popover.editor-popover::part(content) {
   border-radius: 10px;
   left: 5%;
   top: 10%;
 }
 
+ion-popover.tag-popover {
+  --min-height: 40%;
+}
+
 @media screen and (min-width: 520px) {
-  ion-popover {
+  ion-popover.editor-popover {
     --width: 80%;
   }
 
-  ion-popover::part(content) {
+  ion-popover.editor-popover::part(content) {
     left: 10%;
     top: 10%;
   }
 }
 
 @media screen and (min-width: 960px) {
-  ion-popover {
+  ion-popover.editor-popover {
     --width: 70%;
   }
 
-  ion-popover::part(content) {
+  ion-popover.editor-popover::part(content) {
     left: 15%;
     top: 15%;
   }

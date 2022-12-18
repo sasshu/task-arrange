@@ -87,6 +87,14 @@ ion-card {
   }
 }
 
+ion-checkbox {
+  --border-radius: 4px;
+}
+
+.tag-label {
+  font-size: 14px;
+}
+
 ion-fab {
   position: fixed;
   bottom: 50px;

@@ -74,13 +74,49 @@
           </ion-button>
 
           <ion-button
+            id="{{'tag-button' + i}}"
             class="detail-button"
             fill="clear"
             shape="round"
             size="small"
+            (click)="arrangeTags(task)"
           >
             <ion-icon name="pricetags-outline" class="medium"></ion-icon>
           </ion-button>
+          <ion-popover
+            class="tag-popover"
+            side="bottom"
+            alignment="center"
+            trigger="{{'tag-button' + i}}"
+            triggerAction="click"
+          >
+            <ng-template>
+              <ion-content>
+                <ion-list>
+                  <ion-list-header>
+                    <ion-label>タグを編集</ion-label>
+                  </ion-list-header>
+                  <div *ngFor="let tag of tagList; let t = index">
+                    <ion-item *ngIf="task.tags.includes(tag)" lines="none">
+                      <ion-checkbox
+                        slot="start"
+                        (ionChange)="editTags(task, tag)"
+                        checked="true"
+                      ></ion-checkbox>
+                      <ion-label class="tag-label">{{tag}}</ion-label>
+                    </ion-item>
+                    <ion-item *ngIf="!task.tags.includes(tag)" lines="none">
+                      <ion-checkbox
+                        slot="start"
+                        (ionChange)="editTags(task, tag)"
+                      ></ion-checkbox>
+                      <ion-label class="tag-label">{{tag}}</ion-label>
+                    </ion-item>
+                  </div>
+                </ion-list>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
 
           <div class="top-button">
             <ion-note class="copy-msg">Copied!</ion-note>
