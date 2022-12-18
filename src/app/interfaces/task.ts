@@ -1,7 +1,7 @@
 export interface ITask {
   text: string;
   label: string;
-  deadline: string;
+  tags: string[];
   updated: Date;
   pageview: number;
   ispinned: boolean;

@@ -15,31 +15,33 @@
   </ion-header>
 
   <div id="container">
-    <!-- <strong class="capitalize">{{ folder }}</strong> -->
-    <!-- <p>
-      Explore
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://ionicframework.com/docs/components"
-      >
-        UI Components
-      </a>
-    </p> -->
     <div class="task">
       <div
         class="task-list"
         *ngFor="let task of getData.taskList; let i = index"
       >
-        <ion-card class="ion-margin">
-          <ion-card-header [translucent]="true" (click)="showEditor(task)">
+        <ion-card class="ion-margin" (click)="clickTask(task, $event)">
+          <ion-card-header [translucent]="true">
             <ion-card-subtitle>{{ task.label }}</ion-card-subtitle>
             <!-- <ion-card-title>{{ task.deadline }}</ion-card-title> -->
           </ion-card-header>
 
-          <ion-card-content (click)="showEditor(task)">
-            {{ task.text }}
-          </ion-card-content>
+          <ion-card-content>{{ task.text }}</ion-card-content>
+
+          <div class="flex ion-padding-horizontal">
+            <div *ngFor="let tag of task.tags; let t = index">
+              <div class="tag-wrapper">
+                <ion-chip class="tag">
+                  <ion-label>{{tag}}</ion-label>
+                </ion-chip>
+                <ion-icon
+                  class="tag-close"
+                  name="close-circle"
+                  (click)="deleteTags(task, tag)"
+                ></ion-icon>
+              </div>
+            </div>
+          </div>
 
           <ion-button
             class="detail-button"
@@ -66,7 +68,7 @@
             fill="clear"
             shape="round"
             size="small"
-            (click)="deleteTask(i)"
+            (click)="deleteTask(task)"
           >
             <ion-icon name="trash-outline" class="medium"></ion-icon>
           </ion-button>
@@ -74,26 +76,32 @@
           <ion-button
             class="detail-button"
             fill="clear"
-            size="small"
             shape="round"
-            (click)="pinTask(i)"
+            size="small"
           >
-            <ion-icon
-              name="pin-outline"
-              [ngClass]="{'medium': !task.ispinned, 'primary': task.ispinned}"
-            ></ion-icon>
+            <ion-icon name="pricetags-outline" class="medium"></ion-icon>
           </ion-button>
 
-          <div class="copy">
+          <div class="top-button">
             <ion-note class="copy-msg">Copied!</ion-note>
             <ion-button
-              class="copy-button"
               fill="clear"
               shape="round"
               size="small"
-              (click)="getCopy(i)"
+              (click)="getCopy(task)"
             >
-              <ion-icon name="copy-outline" class="copy-icon medium"></ion-icon>
+              <ion-icon name="copy-outline" class="medium"></ion-icon>
+            </ion-button>
+            <ion-button
+              fill="clear"
+              size="small"
+              shape="round"
+              (click)="pinTask(task)"
+            >
+              <ion-icon
+                name="pin-outline"
+                [ngClass]="{'medium': !task.ispinned, 'primary': task.ispinned}"
+              ></ion-icon>
             </ion-button>
           </div>
         </ion-card>

@@ -56,16 +56,21 @@ ion-popover::part(content) {
 @media screen and (min-width: 520px) {
   ion-popover {
     --width: 80%;
-    --max-height: 80%;
-    --backdrop-opacity: 0.7;
   }
 
   ion-popover::part(content) {
-    border-radius: 10px;
     left: 10%;
     top: 10%;
   }
 }
 
 @media screen and (min-width: 960px) {
+  ion-popover {
+    --width: 70%;
+  }
+
+  ion-popover::part(content) {
+    left: 15%;
+    top: 15%;
+  }
 }

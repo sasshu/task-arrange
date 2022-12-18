@@ -34,7 +34,7 @@ export class FolderPage implements OnInit {
     task = {
       text: '',
       label: '',
-      deadline: '',
+      tags: [],
       updated: new Date(),
       pageview: 1,
       ispinned: false,
@@ -43,10 +43,10 @@ export class FolderPage implements OnInit {
   }
 
   // タスク内テキストをクリップボードにコピー
-  getCopy(n: number) {
-    navigator.clipboard.writeText(this.getData.taskList[n].text).then(() => {
+  getCopy(task: ITask) {
+    navigator.clipboard.writeText(task.text).then(() => {
       const elem = document.getElementsByClassName('copy-msg')[
-        n
+        this.getData.taskList.indexOf(task)
       ] as HTMLElement;
       elem!.style.visibility = 'visible';
       setTimeout(() => {
@@ -55,24 +55,21 @@ export class FolderPage implements OnInit {
     });
   }
 
-  // タスク編集画面の表示
-  async showEditor(data: ITask) {
+  // タスク編集
+  async showEditor(task: ITask) {
     const popover = await this.popOverController.create({
       component: EditorComponent,
-      componentProps: { DATA: data },
+      componentProps: { DATA: task },
     });
 
     popover.onDidDismiss().then(() => {
-      if (data.text == '') {
+      if (task.text == '') {
         const list = this.getData.taskList;
-        list.splice(list.indexOf(data), 1);
+        list.splice(list.indexOf(task), 1);
       }
     });
     return await popover.present();
   }
-
-  // タスク完了
-  finishTask() {}
 
   // タスク追加
   addTask() {
@@ -83,35 +80,60 @@ export class FolderPage implements OnInit {
   }
 
   // タスク削除
-  deleteTask(n: number) {
+  deleteTask(task: ITask) {
     const list = this.getData.taskList;
     this.sleep(0.3).then(() => {
-      list.splice(list.indexOf(list[n]), 1);
+      list.splice(list.indexOf(task), 1);
     });
   }
 
   // タスクのピン止め
-  pinTask(n: number) {
+  pinTask(task: ITask) {
     const list = this.getData.taskList;
-    const tTask = list[n];
 
-    tTask.ispinned = !tTask.ispinned;
+    task.ispinned = !task.ispinned;
 
     this.sleep(0.3).then(() => {
       if (list.length > 1) {
-        list.splice(list.indexOf(list[n]), 1);
+        list.splice(list.indexOf(task), 1);
 
         for (let i = 0; i < list.length; i++) {
           if (!list[i].ispinned) {
-            list.splice(i, 0, tTask);
+            list.splice(i, 0, task);
             break;
             // 全てにピンが打ってある場合
           } else if (i == list.length - 1) {
-            list.push(tTask);
+            list.push(task);
             break;
           }
         }
       }
+    });
+  }
+
+  // タスクのクリック
+  clickTask(data: ITask, e: Event) {
+    const clickArea = e.target as HTMLTextAreaElement;
+    // console.log(clickArea.className);
+    if (
+      !clickArea.closest('.detail-button') &&
+      !clickArea.closest('.tag-wrapper') &&
+      !clickArea.closest('.top-button')
+    ) {
+      this.showEditor(data);
+    }
+  }
+
+  // タスク完了
+  finishTask() {}
+
+  // タグの編集
+  editTags(task: ITask) {}
+
+  // タグの削除
+  deleteTags(task: ITask, tag: string) {
+    this.sleep(0.3).then(() => {
+      task.tags.splice(task.tags.indexOf(tag), 1);
     });
   }
 }
