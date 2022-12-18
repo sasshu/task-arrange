@@ -57,7 +57,9 @@ ion-popover.editor-popover::part(content) {
 }
 
 ion-popover.tag-popover {
-  --min-height: 40%;
+  --max-height: 55%;
+  --max-width: 50%;
+  // --offset-y: -50px;
 }
 
 @media screen and (min-width: 520px) {

@@ -13,8 +13,11 @@ import { EditorComponent } from '../editor/editor.component';
 export class FolderPage implements OnInit {
   public folder!: string;
   task!: ITask;
+
   tagList!: string[];
-  tagFlag!: boolean[];
+  tagQueryResult!: string[];
+
+  queryText: string = '';
 
   sleep = (sec: number) =>
     new Promise((resolve) => setTimeout(resolve, sec * 1000));
@@ -115,8 +118,8 @@ export class FolderPage implements OnInit {
   }
 
   // タスクのクリック
-  clickTask(data: ITask, e: Event) {
-    const clickArea = e.target as HTMLTextAreaElement;
+  clickTask(data: ITask, event: Event) {
+    const clickArea = event.target as HTMLTextAreaElement;
     // console.log(clickArea.className);
     if (
       !clickArea.closest('.detail-button') &&
@@ -131,26 +134,31 @@ export class FolderPage implements OnInit {
   finishTask() {}
 
   // タグリストの作成
-  arrangeTags(task: ITask) {
+  arrangeTags() {
     this.tagList = [];
-    this.tagFlag = [];
     const list = this.getData.taskList;
     for (let i = 0; i < list.length; i++) {
       for (let j = 0; j < list[i].tags.length; j++) {
         if (!this.tagList.includes(list[i].tags[j])) {
           this.tagList.push(list[i].tags[j]);
-
-          if (task.tags.includes(list[i].tags[j])) {
-            this.tagFlag.push(true);
-          } else {
-            this.tagFlag.push(false);
-          }
         }
       }
     }
-    console.log(this.tagList);
+    this.tagQueryResult = [...this.tagList];
+    // console.log(this.tagList);
   }
 
+  // タグの絞り込み
+  handleChange(event: Event) {
+    const target = event.target as HTMLTextAreaElement;
+    this.queryText = target.value.toLowerCase();
+    this.tagQueryResult = this.tagList.filter(
+      (d) => d.toLowerCase().indexOf(this.queryText!) > -1
+    );
+    // console.log(target.value.toLowerCase());
+  }
+
+  // タグの編集
   editTags(task: ITask, tag: string) {
     if (task.tags.includes(tag)) {
       this.deleteTags(task, tag);
@@ -159,11 +167,11 @@ export class FolderPage implements OnInit {
     }
   }
 
-  checkTag(task: ITask, tag: string) {
-    if (task.tags.includes(tag)) {
-      return true;
-    }
-    return false;
+  // タグの追加
+  addTags(task: ITask, tag: string) {
+    task.tags.push(tag);
+    this.queryText = '';
+    this.arrangeTags();
   }
 
   // タグの削除
